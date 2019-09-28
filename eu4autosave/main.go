@@ -17,7 +17,7 @@ import (
 	"github.com/s5i/eu4tool/lib/unzip"
 )
 
-var backupPath = flag.String("backup_path", "", `Save files directory. Defaults to %%userprofile%%/Documents/Paradox Interactive/Europa Universalis IV/save games`)
+var backupPath = flag.String("backup_path", "", fmt.Sprintf(`Save files directory. Defaults to %s`, defaultBackupPath))
 
 func main() {
 	flag.Parse()
@@ -25,7 +25,7 @@ func main() {
 	path := *backupPath
 
 	if path == "" {
-		path = fmt.Sprintf("%s\\Documents\\Paradox Interactive\\Europa Universalis IV\\save games", os.Getenv("userprofile"))
+		path = defaultBackupPath
 	}
 
 	w, err := fsnotify.NewWatcher()
