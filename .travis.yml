@@ -8,7 +8,7 @@ install: /bin/true
 
 script:
   - go get -t -v ./...
-  - gox -os="linux windows" -arch="386 amd64" -verbose ./...
+  - gox -os="linux windows darwin" -arch="386 amd64" -verbose ./...
 
 deploy:
   provider: releases
@@ -20,6 +20,8 @@ deploy:
     - "eu4autosave_windows_amd64.exe"
     - "eu4autosave_linux_386"
     - "eu4autosave_linux_amd64"
+    - "eu4autosave_darwin_386"
+    - "eu4autosave_darwin_amd64"
   on:
     repo: s5i/eu4tool
     tags: true
