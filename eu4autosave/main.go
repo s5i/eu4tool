@@ -55,6 +55,13 @@ func main() {
 		}
 
 		log.Printf("%s backed up as %s.", filepath.Base(e.Name), filepath.Base(dated))
+
+		baseSave := strings.TrimSuffix(e.Name, "_Backup.eu4") + ".eu4"
+		if err := touch(baseSave); err != nil {
+			log.Printf("Failed to refresh modification date on %s: %v", filepath.Base(baseSave), err)
+			continue
+		}
+		log.Printf("%s modification date refreshed.", filepath.Base(baseSave))
 	}
 }
 
@@ -110,4 +117,12 @@ func readDate(path string) (string, error) {
 	}
 
 	return date, nil
+}
+
+func touch(path string) error {
+	now := time.Now()
+	if err := os.Chtimes(path, now, now); err != nil {
+		return fmt.Errorf("os.Chtimes(%s, %v, %v): %v", path, now, now, err)
+	}
+	return nil
 }
